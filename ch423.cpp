@@ -15,21 +15,21 @@ void CH423::i2cStart()
     pinMode(CH423_SDA, OUTPUT);
     digitalWrite(CH423_SCL, HIGH);
     pinMode(CH423_SCL, OUTPUT);
-    delay(1);
+    delayMicroseconds(5);;
     digitalWrite(CH423_SDA, LOW);
-    delay(1);
+    delayMicroseconds(5);;
     digitalWrite(CH423_SCL, LOW);
-    delay(1);
+    delayMicroseconds(5);;
 }
 
 void CH423::i2cStop()
 {
     digitalWrite(CH423_SDA, LOW);
-    delay(1);
+    delayMicroseconds(5);;
     digitalWrite(CH423_SCL, HIGH);
-    delay(1);
+    delayMicroseconds(5);;
     digitalWrite(CH423_SDA, HIGH);
-    delay(1);
+    delayMicroseconds(5);;
 }
 
 bool CH423::i2cWriteByte(uint8_t dat)
@@ -61,9 +61,9 @@ uint8_t CH423::i2cReadByte(bool ack)
     dat = 0;
     for (int i = 0; i < 8; i++)
     {
-        delay(1);
+        delayMicroseconds(5);;
         digitalWrite(CH423_SCL, HIGH);
-        delay(1);
+        delayMicroseconds(5);;
         dat <<= 1;
         if (digitalRead(CH423_SDA))
             dat++; // 输入1位
@@ -71,9 +71,9 @@ uint8_t CH423::i2cReadByte(bool ack)
     }
     pinMode(CH423_SDA, OUTPUT);
     digitalWrite(CH423_SDA, HIGH);
-    delay(1);
+    delayMicroseconds(5);;
     digitalWrite(CH423_SCL, HIGH);
-    delay(1);
+    delayMicroseconds(5);;
     digitalWrite(CH423_SCL, LOW);
     return (dat);
 }
@@ -145,7 +145,7 @@ bool CH423::setioPin(uint8_t pin, int value)
         return false;
     if ((sys & BIT_IO_OE) == 0)
         return false;
-    gpio[pin] = HIGH ? 1 : 0;
+    gpio[pin] = value ? 1 : 0;
     uint8_t data = 0;
     for (uint8_t i = 0; i < 8; i++)
     {
